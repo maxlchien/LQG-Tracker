@@ -35,8 +35,8 @@ class KalmanFilter:
         self.S = self.F @ self.S @ self.F.T + self.W
 
     def measurement_update(self, y: np.ndarray):
-        K = self.S @ self.H @ np.linalg.inv(self.ETA + self.H @ self.S @ self.H.T)
-        self.x_hat = self.x_hat + K @ (y - self.H @ self.x_hat)
+        K = self.S @ self.H / (self.ETA + self.H @ self.S @ self.H.T)
+        self.x_hat = self.x_hat + K * (y - self.H @ self.x_hat)
         self.S = (np.identity(2) - K @ self.H) @ self.S @ (
             np.identity(2) - K @ self.H
-        ).T + K @ self.ETA @ K.T
+        ).T + K * self.ETA * K.T

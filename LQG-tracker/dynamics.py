@@ -13,7 +13,7 @@ class NoisyDoubleIntegrator:
     mu_v0: float
     sigma_v02: float
 
-    F: np.ndarray = np.array([[0, 1], [0, 0]])
+    F: np.ndarray = np.array([[1, 1], [0, 1]])
 
     G: np.ndarray = np.array([[0], [1]])
 
@@ -35,25 +35,30 @@ class NoisyDoubleIntegrator:
         Initialize parameters and the initial state according to the Gaussian distribution specified
         by the input parameters.
         """
-        self.sigma_wx2 = (sigma_wx2,)
-        self.sigma_wv2 = (sigma_wv2,)
+        self.sigma_wx2 = sigma_wx2
+        self.sigma_wv2 = sigma_wv2
         self.sigma_eta2 = sigma_eta2
         self.mu_x0 = mu_x0
         self.sigma_x02 = sigma_x02
         self.mu_v0 = mu_v0
         self.sigma_v02 = sigma_v02
 
-        self.x = np.random.normal(
-            loc=[self.mu_x0, self.mu_v0],
-            scale=[np.sqrt(self.sigma_x02), np.sqrt(self.sigma_v02)],
-        ).T
+        self.x = np.array(
+            [
+                [np.random.normal(loc=self.mu_x0, scale=np.sqrt(self.sigma_x02))],
+                [np.random.normal(loc=self.mu_v0, scale=np.sqrt(self.sigma_v02))],
+            ]
+        )
 
     def step(self, u: float):
-        w = np.random.normal(
-            loc=[0, 0],
-            scale=[np.sqrt(self.sigma_wx2), np.sqrt(self.sigma_wv2)],
-        ).T
-        self.x = self.F @ self.x + self.G @ u + w
+        w = np.array(
+            [
+                [np.random.normal(loc=0, scale=np.sqrt(self.sigma_wx2))],
+                [np.random.normal(loc=0, scale=np.sqrt(self.sigma_wv2))],
+            ]
+        )
+
+        self.x = self.F @ self.x + self.G * u + w
 
     def measure(self) -> np.ndarray:
         eta = np.random.normal(scale=np.sqrt(self.sigma_eta2))
