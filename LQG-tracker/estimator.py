@@ -1,6 +1,6 @@
 import numpy as np
 
-from .dynamics import NoisyDoubleIntegrator
+from dynamics import NoisyDoubleIntegrator
 
 
 class KalmanFilter:
