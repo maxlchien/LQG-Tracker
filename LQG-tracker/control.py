@@ -114,7 +114,6 @@ class LQGTracker:
 
         for i in range(self.num_steps - 1):
             x, x_hat, u_star = self._measure_and_step(i)
-            print(x_hat)
             x_trace[i], x_hat_trace[i], u_trace[i] = x, x_hat, u_star
         x, x_hat = self._measure()
         x_trace[-1], x_hat_trace[-1] = x, x_hat

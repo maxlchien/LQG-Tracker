@@ -5,7 +5,8 @@ class NoisyDoubleIntegrator:
     sigma_wx2: float
     sigma_wv2: float
 
-    sigma_eta2: float
+    sigma_etax2: float
+    sigma_etav2: float
 
     mu_x0: float
     sigma_x02: float
@@ -18,6 +19,9 @@ class NoisyDoubleIntegrator:
     G: np.ndarray = np.array([[0], [1]])
 
     H: np.ndarray = np.array([[1, 0], [0, 1]])
+
+    W: np.ndarray
+    ETA: np.ndarray
 
     x: np.ndarray
 

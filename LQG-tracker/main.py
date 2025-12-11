@@ -10,19 +10,19 @@ import numpy as np
 def main():
     sigma_wx2 = 9
     sigma_wv2 = 4
-    sigma_etax2 = 400
-    sigma_etav2 = 4
-    mu_x0 = 100
-    sigma_x02 = 2500
+    sigma_etax2 = 10000
+    sigma_etav2 = 36
+    mu_x0 = 200
+    sigma_x02 = 40000
     mu_v0 = -1
-    sigma_v02 = 36
+    sigma_v02 = 900
 
     alpha = 5
     beta = 2
 
-    gamma = 5
+    gamma = 50
 
-    num_steps = 100
+    num_steps = 200
 
     reference_trajectory = np.array(
         [[[mu_x0 + i * mu_v0], [mu_v0]] for i in range(num_steps)]
