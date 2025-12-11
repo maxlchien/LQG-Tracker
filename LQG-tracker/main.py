@@ -10,9 +10,10 @@ import numpy as np
 def main():
     sigma_wx2 = 9
     sigma_wv2 = 4
-    sigma_eta2 = 4
+    sigma_etax2 = 400
+    sigma_etav2 = 4
     mu_x0 = 100
-    sigma_x02 = 100
+    sigma_x02 = 2500
     mu_v0 = -1
     sigma_v02 = 36
 
@@ -28,7 +29,14 @@ def main():
     )
 
     system = NoisyDoubleIntegrator(
-        sigma_wx2, sigma_wv2, sigma_eta2, mu_x0, sigma_x02, mu_v0, sigma_v02
+        sigma_wx2,
+        sigma_wv2,
+        sigma_etax2,
+        sigma_etav2,
+        mu_x0,
+        sigma_x02,
+        mu_v0,
+        sigma_v02,
     )
     estimator = KalmanFilter(
         mu_x=np.array([mu_x0, mu_v0]).T,

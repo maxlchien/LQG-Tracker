@@ -70,14 +70,12 @@ class LQGTracker:
         for i in range(self.num_steps - 1):
             self.K_series[i] = self._gain(P_series[i])
 
-        print(self.K_series)
         v_series = np.zeros((self.num_steps, 2, 1))
         v_series[-1] = self.M @ self.r_series[-1]
         for i in range(2, self.num_steps + 1):
             v_series[-i] = (
                 self.system.F - self.system.G @ self.K_series[-(i - 1)]
             ).T @ v_series[-(i - 1)] + self.Q @ self.r_series[-i]
-        print(v_series)
 
         self.Kov_series = np.zeros((self.num_steps - 1))
         for i in range(len(self.Kov_series)):
@@ -116,9 +114,10 @@ class LQGTracker:
 
         for i in range(self.num_steps - 1):
             x, x_hat, u_star = self._measure_and_step(i)
-            x_trace[i], x_hat_trace[i], u_trace[i] = x, x_hat[:, np.newaxis], u_star
+            print(x_hat)
+            x_trace[i], x_hat_trace[i], u_trace[i] = x, x_hat, u_star
         x, x_hat = self._measure()
-        x_trace[-1], x_hat_trace[-1] = x, x_hat[:, np.newaxis]
+        x_trace[-1], x_hat_trace[-1] = x, x_hat
 
         pos_trace = x_trace[:, 0]
         v_trace = x_trace[:, 1]
